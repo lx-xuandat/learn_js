@@ -1,0 +1,89 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Công cụ đặt hàng</title>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.slimscroll.min.js"></script>
+    <script src="js/underscore-min.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/jquery.timeago.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/popup.js"></script>
+
+    <!-- require google font -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,700,400,300italic,700italic,400italic&subset=latin,latin-ext,vietnamese' rel='stylesheet' type='text/css'>
+</head>
+
+<script type="text/template" id="_loading-template">
+    <small>Đang tải dữ liệu...</small>
+</script>
+
+<script type="text/template" id="_alert-template">
+    <small>Bạn chưa đăng nhập! Click vào <a href='<%= web_service_url %>' target='_blank'>đây</a> để đăng nhập vào hệ thống.</small>
+</script>
+
+<script type="text/template" id="_notify-item-template">
+
+    <li data-type="<%= systemType %>" class="_notification-row-view <%= isConsumed ? ' consumed ' : '' %> <%= link ? ' link ' : '' %>" id="<%= id %>">
+        <%
+            var href = "";
+            if(link != '' && link != 'null' && link != null){
+                if(objectType == "COMPLAINT"){
+                    href = " href='https://hqc247.vn" + link + "' ";
+                }else{
+                    href = " href='https://hqc247.vn" + link + "' ";
+                }
+            }
+        %>
+
+        <a <%= href %> target="_blank" class="<%= systemType %><%= _.isUndefined(metaData.avatar) ? ' no-avatar' : '' %>">
+
+            <div class="noti-title">
+                <div class="msg">
+                    <%= message %>
+                </div>
+
+                <div class="noti-time">
+                    <i class="<%= icon %>"></i>
+                    <span title="<%= time %>" class="<%= isBefore12Hours ? '_time-ago' : '' %>">
+                        <%= time %>
+                    </span>
+                </div>
+            </div>
+
+            <% if(!_.isUndefined(metaData.avatar)){ %>
+                <div class="noti-image">
+                    <img src="<%= metaData.avatar %>" alt="" />
+                </div>
+            <% } %>
+
+        </a>
+    </li>
+</script>
+
+<body style="width: 380px; height: 600px;">
+
+    <div style="width: 100%;" class="notification-view cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right cbp-spmenu-open">
+
+        <div class="notifications">
+            <div class="notify-header" style="position:relative">
+                <span>Thông báo</span>
+            </div>
+
+            <div class="_slimScroll block-fluid">
+                <ul role="menu" class="title-caret dropdown-lg ul-notifications">
+                    <li class="dropdown-menu-list slimscroll messages">
+                        <ul class="pull-left list-unstyled list-notify" id="_list-notify-items">
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
